@@ -1,12 +1,14 @@
 # Online Python compiler (interpreter) to run Python online.# Write Python 3 code in this online editor and run it.
 import os
-def makeSchema(tbname, takeInput,fieldnames, fieldtype, isunique, required, default, ref, fulfieldnames):
+def makeSchema(tbname, takeInput,fieldnames, fieldtype, isunique, required, default, ref, flufieldnames):
     modelOut = '''import mongoose from "mongoose";
 '''
-
+    fluTypes = []
     if(takeInput):
         tbname = input("Enter schema name: ")
-
+    else:
+        for t in fieldtype:
+            fluTypes.append("String" if t == "mongoose.Schema.Types.ObjectId" else ("int" if t == "Number" else t))
     conOut = '''import %s from "../models/%s.js";
     '''%(tbname, tbname)
     conimports =''''''
@@ -22,7 +24,7 @@ const %sModel = new mongoose.Schema({
 '''%(tbname)
     if(takeInput):
         fieldnames = []
-        fulfieldnames = []
+        flufieldnames = []
         fieldtype = []
         required = []
         isunique = []
@@ -38,9 +40,10 @@ const %sModel = new mongoose.Schema({
             break
         fieldnames.append(fn)
         ffn = input("Enter flutter field name: ")
-        fulfieldnames.append(ffn)
+        flufieldnames.append(ffn)
         t = input("Enter field type: ")
         fieldtype.append(t)
+        fluTypes.append("String" if t == "mongoose.Schema.Types.ObjectId" else ("int" if t == "Number" else t))
         u = input("Enter is field is unique (1/0): ")
         u = True if (u =='1') else False
         isunique.append(u)
@@ -52,7 +55,7 @@ const %sModel = new mongoose.Schema({
         required.append(r)
     if(len(fieldnames)==0):
         fieldnames = ["field1","field2","field3"]
-        fulfieldnames = []
+        flufieldnames = []
         fieldtype = ["String","Number","mongoose.Schema.Types.ObjectId"]
         required = ["","","This 3 is required"]
         isunique = ["","","True"]
@@ -328,10 +331,78 @@ export async function delete%s(req,res){
         os.makedirs("routes")
     with open(routef, 'w') as file:
         file.write("*** Add this as imports\n"+routeImports+"\n\n*** Add these in routers\n"+routes)
+
+    fluModel = '''
+class %s{
+    final String _id;
+    final %s
+    
+    const %s({
+        required this._id,
+        required this.%s
+    });
+    
+    factory %s.fromJson(Map<String, dynamic> json) => %s(
+        _id: json['_id'],
+        %s
+    );
+
+    Map<String, dynamic> toJson() => {
+        '_id': _id,
+        %s
+        // if a list
+        // "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    };
+}'''%(
+        tbname.capitalize(),
+        ";\n\tfinal ".join([fluTypes[i] +" "+ flufieldnames[i] for i in range(0,len(flufieldnames))]),
+        tbname.capitalize(),
+        ",\n\t\trequired this.".join([flufieldnames[i] for i in range(0,len(flufieldnames))]),
+        tbname.capitalize(),
+        tbname.capitalize(),
+        ",\n\t\t".join([flufieldnames[i]+": json['"+fieldnames[i]+"']" for i in range(0,len(flufieldnames))]),
+        ",\n\t\t".join(["'"+fieldnames[i]+"': "+flufieldnames[i] for i in range(0,len(flufieldnames))])
+    )
+
+    print(fluModel)
+
+    routef = os.path.join("flutter/models/",tbname+"Model.dart")
+    if not os.path.exists("flutter/models"):
+        os.makedirs("flutter/models")
+    with open(routef, 'w') as file:
+        file.write(fluModel)
+
+    flutterFunc = '''//File with functions to handle CULFD function of a object (%s)
+import 'dart:convert';
+
+// change app name
+import 'package:app/models/%sModel.dart';
+import 'package:http/http.dart' as http;
+
+String baseUrl = "http://127.0.0.1:5000/";
+
+String listUrl = "list%s";
+String findUrl = "find%s";
+String deleteUrl = "delete%s";
+String updateUrl = "update%s";
+String createUrl = "create%s";
+
+
+'''%(
+    tbname,
+    tbname,
+    tbname,
+    tbname,
+    tbname,
+    tbname,
+    tbname,
+    
+)
+
 # mainvar = {
 #     "tbname": {
 #         "fieldnames": fieldnames,
-#         "flutterfieldname": fulfieldnames,
+#         "flutterfieldname": flufieldnames,
 #         "fieldtype": fieldtype,
 #         "isunique": isunique,
 #         "ref":ref,
@@ -340,7 +411,7 @@ export async function delete%s(req,res){
 #     },
 #     "tb2name": {
 #         "fieldnames": fieldnames,
-#         "flutterfieldname": fulfieldnames,
+#         "flutterfieldname": flufieldnames,
 #         "fieldtype": fieldtype,
 #         "isunique": isunique,
 #         "ref":ref,

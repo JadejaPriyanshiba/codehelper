@@ -1,0 +1,33 @@
+
+class User{
+    final String _id;
+    String name;
+	final String email;
+	final int contact;
+	final String desc
+    const User({
+        required this._id,
+        String name,
+	required this.String email,
+	required this.int contact,
+	required this.String desc
+    });
+    
+    factory User.fromJson(Map<String, dynamic> json) => User(
+        _id: json['_id'],
+        name: json['name'],
+			email: json['email'],
+			contact: json['contact'],
+			desc: json['desc']
+    );
+
+    Map<String, dynamic> toJson() => {
+        '_id': _id,
+        "name": name,
+			"email": email,
+			"contact": contact,
+			"desc": desc
+        // if a list
+        // "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    };
+}
