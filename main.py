@@ -78,7 +78,7 @@ const %sModel = new mongoose.Schema({
             modelOut += '''
         ref: '%s','''%(ref[i])
         modelOut+='''
-        },'''
+    },'''
 
         if(ref[i]!=""):
             conimports +='''import %s from "../models/%s.js";        

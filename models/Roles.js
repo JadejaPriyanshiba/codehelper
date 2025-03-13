@@ -6,21 +6,21 @@ const RolesModel = new mongoose.Schema({
         type: String,
         required: 'true',
         unique: true,
-        },
+    },
     status : {
         type: String,
         default: Active,
-        },
+    },
     createdByID : {
         type: mongoose.Schema.Types.ObjectId,
         required: 'true',
         ref: 'Users',
-        },
+    },
     updatedByID : {
         type: mongoose.Schema.Types.ObjectId,
         required: 'true',
         ref: 'Users',
-        },
+    },
 },{
     timestamps: true,
     versionKey:false,
