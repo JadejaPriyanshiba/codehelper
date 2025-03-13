@@ -1,0 +1,39 @@
+*** Add this as imports
+
+    import { createNewscategory, deleteNewscategory, findNewscategory, listNewscategory, updateNewscategory } from "../controllers/NewsCategoryCon.js";
+    
+
+*** Add these in routers
+
+    server.post('/createNewsCategory',
+        check("name").not().isEmpty().withMessage("name is required.").trim(),,
+	check("description").not().isEmpty().withMessage("description is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        createNewscategory
+    ),
+    server.post('/updateNewsCategory',
+        check("name").not().isEmpty().withMessage("name is required.").trim(),,
+	check("description").not().isEmpty().withMessage("description is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        updateNewscategory
+    ),
+    server.post('/deleteNewsCategory',
+        check("_id").not().isEmpty().withMessage("Newscategory ID is required.").trim(),
+        validate,
+        deleteNewscategory
+    ),
+    server.post('/findNewsCategory',
+        check("_id").not().isEmpty().withMessage("Newscategory ID is required.").trim(),
+        validate,
+        findNewscategory
+    ),
+    server.post('/listNewsCategory',
+        listNewscategory
+    ),
+

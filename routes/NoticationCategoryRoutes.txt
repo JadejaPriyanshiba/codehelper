@@ -1,0 +1,39 @@
+*** Add this as imports
+
+    import { createNoticationcategory, deleteNoticationcategory, findNoticationcategory, listNoticationcategory, updateNoticationcategory } from "../controllers/NoticationCategoryCon.js";
+    
+
+*** Add these in routers
+
+    server.post('/createNoticationCategory',
+        check("name").not().isEmpty().withMessage("name is required.").trim(),,
+	check("description").not().isEmpty().withMessage("description is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        createNoticationcategory
+    ),
+    server.post('/updateNoticationCategory',
+        check("name").not().isEmpty().withMessage("name is required.").trim(),,
+	check("description").not().isEmpty().withMessage("description is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        updateNoticationcategory
+    ),
+    server.post('/deleteNoticationCategory',
+        check("_id").not().isEmpty().withMessage("Noticationcategory ID is required.").trim(),
+        validate,
+        deleteNoticationcategory
+    ),
+    server.post('/findNoticationCategory',
+        check("_id").not().isEmpty().withMessage("Noticationcategory ID is required.").trim(),
+        validate,
+        findNoticationcategory
+    ),
+    server.post('/listNoticationCategory',
+        listNoticationcategory
+    ),
+

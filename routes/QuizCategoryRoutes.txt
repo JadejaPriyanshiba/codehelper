@@ -1,0 +1,39 @@
+*** Add this as imports
+
+    import { createQuizcategory, deleteQuizcategory, findQuizcategory, listQuizcategory, updateQuizcategory } from "../controllers/QuizCategoryCon.js";
+    
+
+*** Add these in routers
+
+    server.post('/createQuizCategory',
+        check("name").not().isEmpty().withMessage("name is required.").trim(),,
+	check("description").not().isEmpty().withMessage("description is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        createQuizcategory
+    ),
+    server.post('/updateQuizCategory',
+        check("name").not().isEmpty().withMessage("name is required.").trim(),,
+	check("description").not().isEmpty().withMessage("description is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        updateQuizcategory
+    ),
+    server.post('/deleteQuizCategory',
+        check("_id").not().isEmpty().withMessage("Quizcategory ID is required.").trim(),
+        validate,
+        deleteQuizcategory
+    ),
+    server.post('/findQuizCategory',
+        check("_id").not().isEmpty().withMessage("Quizcategory ID is required.").trim(),
+        validate,
+        findQuizcategory
+    ),
+    server.post('/listQuizCategory',
+        listQuizcategory
+    ),
+

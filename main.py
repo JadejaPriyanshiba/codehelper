@@ -334,34 +334,34 @@ export async function delete%s(req,res){
 
     fluModel = '''
 class %s{
-    final String _id;
-    final %s
+    final String id;
+    final %s;
     
     const %s({
-        required this._id,
+        required this.id,
         required this.%s
     });
     
     factory %s.fromJson(Map<String, dynamic> json) => %s(
-        _id: json['_id'],
+        id: json['_id'],
         %s
     );
 
     Map<String, dynamic> toJson() => {
-        '_id': _id,
+        '_id': id,
         %s
         // if a list
         // "list": List<dynamic>.from(list.map((x) => x.toJson())),
     };
 }'''%(
         tbname.capitalize(),
-        ";\n\tfinal ".join([fluTypes[i] +" "+ flufieldnames[i] for i in range(0,len(flufieldnames))]),
+        ";\n\t\tfinal ".join([fluTypes[i] +" "+ flufieldnames[i] for i in range(0,len(flufieldnames))]),
         tbname.capitalize(),
-        ",\n\t\trequired this.".join([flufieldnames[i] for i in range(0,len(flufieldnames))]),
+        ",\n\t\t\t\trequired this.".join([flufieldnames[i] for i in range(0,len(flufieldnames))]),
         tbname.capitalize(),
         tbname.capitalize(),
-        ",\n\t\t".join([flufieldnames[i]+": json['"+fieldnames[i]+"']" for i in range(0,len(flufieldnames))]),
-        ",\n\t\t".join(["'"+fieldnames[i]+"': "+flufieldnames[i] for i in range(0,len(flufieldnames))])
+        ",\n\t\t\t\t".join([flufieldnames[i]+": json['"+fieldnames[i]+"']" for i in range(0,len(flufieldnames))]),
+        ",\n\t\t\t\t".join(["'"+fieldnames[i]+"': "+flufieldnames[i] for i in range(0,len(flufieldnames))])
     )
 
     print(fluModel)

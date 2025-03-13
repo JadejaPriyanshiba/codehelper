@@ -1,0 +1,35 @@
+*** Add this as imports
+
+    import { createAdmins, deleteAdmins, findAdmins, listAdmins, updateAdmins } from "../controllers/AdminsCon.js";
+    
+
+*** Add these in routers
+
+    server.post('/createAdmins',
+        check("firstName").not().isEmpty().withMessage("firstName is required.").trim(),,
+	check("lastName").not().isEmpty().withMessage("lastName is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),
+        validate,
+        createAdmins
+    ),
+    server.post('/updateAdmins',
+        check("firstName").not().isEmpty().withMessage("firstName is required.").trim(),,
+	check("lastName").not().isEmpty().withMessage("lastName is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),
+        validate,
+        updateAdmins
+    ),
+    server.post('/deleteAdmins',
+        check("_id").not().isEmpty().withMessage("Admins ID is required.").trim(),
+        validate,
+        deleteAdmins
+    ),
+    server.post('/findAdmins',
+        check("_id").not().isEmpty().withMessage("Admins ID is required.").trim(),
+        validate,
+        findAdmins
+    ),
+    server.post('/listAdmins',
+        listAdmins
+    ),
+

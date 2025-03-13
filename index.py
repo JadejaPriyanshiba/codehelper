@@ -1,27 +1,28 @@
 from main import makeSchema
+from read import readExcel
 
-
-mainvar = {
-    "user": {
-        "fieldnames": ["name","email","contact", "desc"],
-        "flutterfieldname": ["name","email","contact", "desc"],
-        "fieldtype": ["String","String","Number","String"],
-        "isunique": ["","true","true",""],
-        "ref":["","","",""],
-        "defaults":["","","","default describtion"],
-        "required": ["name is required","email is required","",""]
-    },
-    "car": {
-        "fieldnames": ["model","companyID","OwnerID","number_plate"],
-        "flutterfieldname": ["model","companyID","OwnerID","number_plate"],
-        "fieldtype": ["String","mongoose.Schema.Types.ObjectId","mongoose.Schema.Types.ObjectId","Number"],
-        "isunique": ["","","",""],
-        "ref":["","cars","user",""],
-        "defaults":["","","",""],
-        "required": ["Model name is required","","","Number plate us required"]
-    },
-}
-
+# mainvar = {
+#     "user": {
+#         "fieldnames": ["name","email","contact", "desc"],
+#         "flutterfieldname": ["name","email","contact", "desc"],
+#         "fieldtype": ["String","String","Number","String"],
+#         "isunique": ["","true","true",""],
+#         "ref":["","","",""],
+#         "defaults":["","","","default describtion"],
+#         "required": ["name is required","email is required","",""]
+#     },
+#     "car": {
+#         "fieldnames": ["model","companyID","OwnerID","number_plate"],
+#         "flutterfieldname": ["model","companyID","OwnerID","number_plate"],
+#         "fieldtype": ["String","mongoose.Schema.Types.ObjectId","mongoose.Schema.Types.ObjectId","Number"],
+#         "isunique": ["","","",""],
+#         "ref":["","cars","user",""],
+#         "defaults":["","","",""],
+#         "required": ["Model name is required","","","Number plate us required"]
+#     },
+# }
+file_path = 'GreenPulseDB.xlsx'
+mainvar = readExcel(file_path, False) 
 for key, value in mainvar.items():
 #     (function) def makeSchema(
 #     tbname: Any,

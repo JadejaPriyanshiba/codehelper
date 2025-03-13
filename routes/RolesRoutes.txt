@@ -1,0 +1,37 @@
+*** Add this as imports
+
+    import { createRoles, deleteRoles, findRoles, listRoles, updateRoles } from "../controllers/RolesCon.js";
+    
+
+*** Add these in routers
+
+    server.post('/createRoles',
+        check("roleName").not().isEmpty().withMessage("roleName is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        createRoles
+    ),
+    server.post('/updateRoles',
+        check("roleName").not().isEmpty().withMessage("roleName is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        updateRoles
+    ),
+    server.post('/deleteRoles',
+        check("_id").not().isEmpty().withMessage("Roles ID is required.").trim(),
+        validate,
+        deleteRoles
+    ),
+    server.post('/findRoles',
+        check("_id").not().isEmpty().withMessage("Roles ID is required.").trim(),
+        validate,
+        findRoles
+    ),
+    server.post('/listRoles',
+        listRoles
+    ),
+

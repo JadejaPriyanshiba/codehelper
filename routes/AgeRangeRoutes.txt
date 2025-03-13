@@ -1,0 +1,41 @@
+*** Add this as imports
+
+    import { createAgerange, deleteAgerange, findAgerange, listAgerange, updateAgerange } from "../controllers/AgeRangeCon.js";
+    
+
+*** Add these in routers
+
+    server.post('/createAgeRange',
+        check("identifier").not().isEmpty().withMessage("identifier is required.").trim(),,
+	check("minAge").not().isEmpty().withMessage("minAge is required.").trim(),,
+	check("maxAge").not().isEmpty().withMessage("maxAge is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        createAgerange
+    ),
+    server.post('/updateAgeRange',
+        check("identifier").not().isEmpty().withMessage("identifier is required.").trim(),,
+	check("minAge").not().isEmpty().withMessage("minAge is required.").trim(),,
+	check("maxAge").not().isEmpty().withMessage("maxAge is required.").trim(),,
+	check("status").not().isEmpty().withMessage("status is required.").trim(),,
+	check("createdByID").not().isEmpty().withMessage("createdByID is required.").trim(),,
+	check("updatedByID").not().isEmpty().withMessage("updatedByID is required.").trim(),
+        validate,
+        updateAgerange
+    ),
+    server.post('/deleteAgeRange',
+        check("_id").not().isEmpty().withMessage("Agerange ID is required.").trim(),
+        validate,
+        deleteAgerange
+    ),
+    server.post('/findAgeRange',
+        check("_id").not().isEmpty().withMessage("Agerange ID is required.").trim(),
+        validate,
+        findAgerange
+    ),
+    server.post('/listAgeRange',
+        listAgerange
+    ),
+

@@ -1,34 +1,33 @@
-import user from "../models/user.js";
+import Admins from "../models/Admins.js";
     
-export async function createUser(req,res){
+export async function createAdmins(req,res){
     try{
-        const { name, email, contact, desc } = req.body;
+        const { firstName, lastName, status } = req.body;
         
         // change this if you have one uniquw key in your table
-        const existingUser = await user.findOne({email})
+        const existingAdmins = await Admins.findOne({firstName, lastName, status})
 
-        if(existingUser){
+        if(existingAdmins){
             return res.status(400).json({
                 status:"Failed",
                 data:[],
-                message:"User already exists."
+                message:"Admins already exists."
             })
         }
 
-        const newUser = new user({
-            name,
-			email,
-			contact,
-			desc
+        const newAdmins = new Admins({
+            firstName,
+			lastName,
+			status
         });
         
-        const savedUser = await newUser.save();
-        const dataToSend = await user.findById(savedUser._id).exec();
+        const savedAdmins = await newAdmins.save();
+        const dataToSend = await Admins.findById(savedAdmins._id).exec();
         
         res.status(200).json({
             status: "Success",
             data: dataToSend._doc,
-            message: "User created Successfully!"
+            message: "Admins created Successfully!"
         })
     }catch(e){
         res.status(500).json({
@@ -38,24 +37,24 @@ export async function createUser(req,res){
     }
 }
 
-// function to update user a entry by id
-export async function updateUser(req,res){
+// function to update Admins a entry by id
+export async function updateAdmins(req,res){
     try{
-        const { _id, name, email, contact, desc } = req.body;
+        const { _id, firstName, lastName, status } = req.body;
 
-        let existingUser = await user.findById(_id);
-        if(!existingUser){
+        let existingAdmins = await Admins.findById(_id);
+        if(!existingAdmins){
             return res.status(404).json({
                 staus: "Failed",
-                message : "So such User with id "+_id+" exists."
+                message : "So such Admins with id "+_id+" exists."
             });
         }
 
 
-        dataToSend = await user.findAndUpdateById(_id,{name, email, contact, desc});
+        dataToSend = await Admins.findAndUpdateById(_id,{firstName, lastName, status});
         return res.status(200).json({
             status: "Success",
-            message: "User with id "+_id+" updated successfully.",
+            message: "Admins with id "+_id+" updated successfully.",
             data: dataToSend._doc,
         });
     }catch(e){
@@ -66,20 +65,20 @@ export async function updateUser(req,res){
     }
 }
 
-export async function findUser(req,res){
+export async function findAdmins(req,res){
     try{
         const { _id } = req.body;
-        const existingUser = await user.findById(_id);
-        if(!existingUser){
+        const existingAdmins = await Admins.findById(_id);
+        if(!existingAdmins){
             return res.status(401).json({
                 status:"Failed",
-                message:"User with id "+_id+" doesn't exist"
+                message:"Admins with id "+_id+" doesn't exist"
             })
         }
         
         res.status(200).json({
             status:"Success",
-            data: existingUser._doc,
+            data: existingAdmins._doc,
             message: "Successful search!"
         })
     }catch(e){
@@ -90,10 +89,10 @@ export async function findUser(req,res){
     }
 }
 
-// function to list whole user data
-export async function listUser(req,res){
+// function to list whole Admins data
+export async function listAdmins(req,res){
     try{
-        const dataToSend = await user.find().exec();
+        const dataToSend = await Admins.find().exec();
         res.status(200).json({
             status:"Success",
             data: dataToSend,
@@ -108,20 +107,20 @@ export async function listUser(req,res){
 }
 
 // function to delete
-export async function deleteUser(req,res){
+export async function deleteAdmins(req,res){
     try{
         const { _id } = req.body;
-        let existUser = await user.findOne({ _id });
-        if(!existUser){
+        let existAdmins = await Admins.findOne({ _id });
+        if(!existAdmins){
             return res.status(401).json({
                 status:"Failed",
-                message:"Can't find User with ID: "+_id
+                message:"Can't find Admins with ID: "+_id
             });
         }
-        await user.findOneAndDelete({ _id });
+        await Admins.findOneAndDelete({ _id });
         res.status(200).json({
             status:"Success",
-            message:"User Deleted Successfully."
+            message:"Admins Deleted Successfully."
         })
     }catch(e){
         res.status(500).json({
